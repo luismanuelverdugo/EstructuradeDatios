@@ -63,6 +63,48 @@ public class ListaDobleCircularEjemplo{
                 System.out.println("tan vacia como tu corazon");
             }
         }
+
+        //metodo para borrar el chocoboyo de lia
+        public boolean eliminaChocoBoyo(int dato){
+            if(estaVacia()){
+                System.out.println("lista vacia como la bolsa del chocoboyo...");
+            }
+
+            Nodo actual=inicio;
+            Nodo anterior=null;
+
+            do{
+                if(actual.dato==dato){
+                    if(tamano==1){
+                        //solo hay un nodo en la lista
+                        inicio=null;
+                    }
+                    else{
+                        //muerte al chocoboyo
+                        //la causa de muerte de la langosta fue el puchi chocoboyo, langosta inri
+                        Nodo siguiente=actual.siguiente;
+                        Nodo previo=actual.anterior;
+
+                        //chocoboyo para jefe de grupo
+
+                        previo.siguiente=siguiente;
+                        siguiente.anterior=previo;
+
+                        if(actual==inicio){
+                            //si eliminamos el nodo de inicio, el nuevo inicio es el siguiente
+                            inicio=siguiente;
+                        }
+                    }
+                    tamano--;
+                    System.out.println("eliminado el chocoboyo:"+dato);
+                    return true;
+                }
+                anterior=actual;
+                actual=actual.siguiente;
+            }while(actual!=inicio);
+            System.out.println("chocoboyo no chocoencontrado:"+dato);
+            return false;
+        }
     }
 
     public static void main(String[] args){
@@ -76,6 +118,11 @@ public class ListaDobleCircularEjemplo{
         lista.insertaAlInicio(16);
         lista.insertaAlInicio(20);
         lista.insertaAlInicio(30);
+
+        lista.recorrerAdelante();
+
+        lista.eliminaChocoBoyo(2);
+        lista.eliminaChocoBoyo(16);
 
         lista.recorrerAdelante();
 
