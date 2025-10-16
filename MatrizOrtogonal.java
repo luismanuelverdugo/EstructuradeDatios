@@ -72,8 +72,70 @@ public class MatrizOrtogonal {
         }
     }
 
+    public void inicializarFichas(){
+        //empieza desde el nodo inicial (arriba izq)
+        Nodo filaActual = inicio;
+
+        //fichas negras (jugador2) las 3 filas de fichas
+        for(int i=0;i<3 && filaActual != null; i++){
+            Nodo colActual = filaActual;
+
+            for(int j=0; j< columnas && colActual != null; j++){
+                //intercalamos las fichas:
+                if((i+j)%2==0){
+                    colActual.color="N"; //asignamos intercaladamente color
+                    colActual.status=true; //ahora existe una ficha intercalada
+                    colActual.tipo="D"; //empiezan todas las fichas como damas
+                }
+                colActual=colActual.derecha;//mueve der
+            }
+            filaActual = filaActual.abajo;//mueve hacia abajo
+        }
+
+        //fichas rojas (jugador1) las 3 ultimas filas
+        filaActual=inicio;
+        for(int i=0;i<5 && filaActual !=null; i++){
+            //recorre la matriz - es posible hacer esto con un while(?)
+            filaActual = filaActual.abajo;
+        }
+
+        //vamos a ir a las filas del jugador1 (ultimas 3 filas)
+        for(int i=5; i<8 && filaActual !=null; i++){
+            Nodo colActual = filaActual;
+
+            for(int j=0;j<columnas && colActual !=null; j++){
+                //intercalamos igual las fichas, pero esta vez:
+                if((i+j)%2==0){
+                    colActual.color="R";
+                    colActual.status=true;
+                    colActual.tipo = "D";
+                }
+                colActual = colActual.derecha; //volvemos a mover pointer
+            }
+            filaActual =filaActual.abajo; //y aqui tmb :3
+        }
+    }
+
+    public void acomodarFichas (){
+        for (int i=0; i<3; i++){ //inicializa las fichas negras
+            for (int j=0; j<filas; j=j+2){
+                if (i==1 && j==0)
+                    j++;
+                setValor(i, j, "N", true, "D");
+            }
+        }
+
+        for (int i=5; i<columnas; i++) {
+            for (int j=1; j<filas; j=j+2){
+                if (i==6 && j==1)
+                    j--;
+                setValor(i, j, "B", true , "D");
+            }
+        }
+    }
+
     // asigna un valor a una celca especifica de la matriz
-    public void setValor(int fila, int columna, String color) {
+    public void setValor(int fila, int columna, String color, boolean estado, String type) { // se le agregaron los aparametros booleano estado y string type
         Nodo actual = inicio;
 
         // moverse hacia la fila deseada
@@ -89,6 +151,8 @@ public class MatrizOrtogonal {
         }
 
         actual.color = color;
+        actual.status = estado; //le agregue esta asignacion
+        actual.tipo = type; //le agregue esta asignacion
     }
 
     // metodo para agregar una nueva fila al final
@@ -174,6 +238,8 @@ public class MatrizOrtogonal {
         System.out.println("--------------------------");
         */
         tablero.crearMatriz(8, 8);
+        //tablero.acomodarFichas();
+        tablero.inicializarFichas();
         tablero.imprimirMatriz();
     }
 }
