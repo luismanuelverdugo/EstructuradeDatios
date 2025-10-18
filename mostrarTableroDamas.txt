@@ -1,0 +1,56 @@
+    public void mostrarTableroDamas(int filaInicio, int colInicio) {
+        if (filaInicio < 0 || colInicio < 0 || filaInicio >= filas || colInicio >= columnas) {
+            System.out.println("[ERROR] Coordenadas fuera de rango.");
+            return;
+        }
+
+        Nodo filaActual = inicio;
+        for (int i = 0; i < filaInicio; i++) {
+            if (filaActual.abajo != null)
+                filaActual = filaActual.abajo;
+        }
+
+        Nodo inicioColumna = filaActual;
+        for (int j = 0; j < colInicio; j++) {
+            if (inicioColumna.derecha != null)
+                inicioColumna = inicioColumna.derecha;
+        }
+
+        System.out.print("   ");
+        for (int j = colInicio; j < columnas; j++) {
+            char letra = (char) ('A' + j);
+            System.out.print(" " + letra + " ");
+        }
+        System.out.println();
+
+        boolean colorNegroInicio = ((filaInicio + colInicio) % 2 == 0);
+
+        Nodo filaImprimir = inicioColumna;
+        int numFila = filaInicio + 1;
+
+        while (filaImprimir != null) {
+            Nodo colActual = filaImprimir;
+            boolean colorNegro = colorNegroInicio;
+
+            System.out.printf("%2d ", numFila);
+
+            while (colActual != null) {
+                System.out.print(colorNegro ? "[#]" : "[ ]");
+                colorNegro = !colorNegro;
+                colActual = colActual.derecha;
+            }
+
+            System.out.printf(" %2d", numFila);
+            System.out.println();
+            colorNegroInicio = !colorNegroInicio;
+            filaImprimir = filaImprimir.abajo;
+            numFila++;
+        }
+
+        System.out.print("   ");
+        for (int j = colInicio; j < columnas; j++) {
+            char letra = (char) ('A' + j);
+            System.out.print(" " + letra + " ");
+        }
+        System.out.println();
+    }
