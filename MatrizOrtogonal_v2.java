@@ -1,4 +1,9 @@
+import java.util.Scanner;
+
 public class MatrizOrtogonal_v2 {
+
+    Scanner cin = new Scanner(System.in);//para interactuar con la consola
+
     static class Nodo {
         int fila, columna;
         boolean status;
@@ -281,8 +286,60 @@ public class MatrizOrtogonal_v2 {
         System.out.println();
     }
 
-    public void mostrarFichas() {
+    public void moverFichas(String color) {
+        Nodo actual = inicio;
+        //como nos movemos a la columna deseada ? moviendonos
+        /*for(int i=1; i<8; i++){
+            ficha = ficha.derecha;
+        }
 
+        for(int j)*/
+        System.out.println("Fila de origen: "); int filaOrigen = cin.nextInt();
+        System.out.println("Columna de origen: "); int columnaOrigen = cin.nextInt();
+        System.out.println("Fila destino: "); int filaDestino = cin.nextInt();
+        System.out.println("Columna destino: "); int columnaDestino = cin.nextInt();
+
+        //Vamos a obtener el valor original
+        for(int i=0; i<filaOrigen; i++) actual = actual.abajo;
+        for(int j=0; j<columnaOrigen; j++) actual = actual.derecha;
+
+        if(actual.tipo != "D"){
+            System.out.println("No hay una ficha en esa posicion, intenta con otra :3");
+            return;
+        }
+
+        //tablero.setValor(filaOrigen,columnaOrigen, 0);//movemos ficha
+        if(actual.color == "B"){//si es ficha Blanca
+            //¿¿
+        }else if(actual.color == "N"){//si es ficha Negra
+            //¿¿
+        }else{//sin color
+            System.out.println("La ficha no existe.");
+        }
+        //tablero.setValor(filaDestino,columnaDestino,valor);//situamos ficha
+
+        System.out.println("Movimiento realizado :3");
+
+        //como nos movemos a la fila correcta ? moviendonos
+
+    }
+
+    //creamos una funcion para jugar :D
+    public void jugar(){
+        int opcion;
+        do{
+            //imprimirTablero();
+            System.out.println("===OPCIONES PARA JUGAR===");
+            System.out.println("1. Mover ficha.");
+            System.out.println("2. Salir :c");
+            System.out.println("Elige una opcion: "); opcion = cin.nextInt();
+
+            switch(opcion){
+                case 1 -> moverFichas();
+                case 2 -> System.out.println("Adios :c");
+                default -> System.out.println("Esa opcion no existe...");
+            }
+        }while(opcion!=2);
     }
 
     public static void main(String[] args) {
@@ -314,5 +371,6 @@ public class MatrizOrtogonal_v2 {
         tablero.inicializarTablero();
         // tablero.imprimirMatriz();
         tablero.mostrarTableroDamas(0, 0);
+        tablero.jugar();
     }
 }
