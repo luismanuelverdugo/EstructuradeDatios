@@ -25,6 +25,8 @@ public class MatrizOrtogonal_v2 {
 
     private Nodo inicio; // Nodo superior izq de la matriz
     private int filas, columnas;
+    private int fichasBlancas=12;
+    private int fichasNegras=12;
 
     public MatrizOrtogonal_v2() {
         inicio = null;
@@ -333,37 +335,56 @@ public class MatrizOrtogonal_v2 {
             System.out.println("1. Mover ficha.");
             System.out.println("2. Salir :c");
             System.out.println("Elige una opcion: "); opcion = cin.nextInt();
-
+            /*     
             switch(opcion){
-                case 1 -> moverFichas();
+                case 1 -> this.moverFichas();
                 case 2 -> System.out.println("Adios :c");
                 default -> System.out.println("Esa opcion no existe...");
             }
+            */
         }while(opcion!=2);
+    }
+
+    //co : columna origina, fo : fila original
+    //cd : columna destino, fo : fila destino
+    public void moverFicha(int co, int fo, int cd, int fd){
+        Nodo actual = inicio;
+        Nodo mover = inicio;
+        
+        //nos movemos a la ficha original
+        for(int i=1; i<fo; i++) actual = actual.abajo;
+        for(int j=1; j<co; j++) actual = actual.derecha;
+
+        //nos movemos a la casilla destino
+        for(int i=1; i<fd; i++) mover = mover.abajo;
+        for(int j=1; j<cd; j++) mover = mover.derecha;
+        
+        //si la dama es del mismo color no pasa nada
+        if (actual.color==mover.color){
+            System.out.println("damas del mismo color");
+            return;
+        }
+        else{
+            if (mover.color=="S"){
+                mover.color=actual.color;
+                actual.color="S";
+                actual.tipo="T";
+                actual.status=false;
+                mover.tipo="D";
+                mover.status=true;
+            }
+            else{
+                //falta descontar fichas
+            }
+        }
+
+
     }
 
     public static void main(String[] args) {
         // MatrizOrtogonal matriz=new MatrizOrtogonal();
         MatrizOrtogonal_v2 tablero = new MatrizOrtogonal_v2();
 
-        // creamos la matriz de 3 filas x 4 columnas
-        // matriz.crearMatriz(3, 4);
-        // matriz.imprimirMatriz();
-        // System.out.println("--------------------------");
-        // matriz.setValor(0, 0, 5);
-        // matriz.setValor(1, 2, 10);
-        // matriz.setValor(2, 3, 15);
-        // matriz.imprimirMatriz();
-
-        // System.out.println("--------------------------");
-        // matriz.agregarFila();
-        // matriz.imprimirMatriz();
-
-        // System.out.println("--------------------------");
-        // matriz.agregarColumna();
-        // matriz.imprimirMatriz();
-
-        // System.out.println("--------------------------");
 
         tablero.crearMatriz(8, 8);
 
@@ -371,6 +392,11 @@ public class MatrizOrtogonal_v2 {
         tablero.inicializarTablero();
         // tablero.imprimirMatriz();
         tablero.mostrarTableroDamas(0, 0);
-        tablero.jugar();
+        tablero.moverFicha(1, 3, 2, 4);
+        tablero.mostrarTableroDamas(0, 0);
+        tablero.moverFicha(2, 6, 3, 5);
+        tablero.mostrarTableroDamas(0, 0);
+
+        //tablero.jugar();
     }
 }
