@@ -25,8 +25,8 @@ public class MatrizOrtogonal_v2 {
 
     private Nodo inicio; // Nodo superior izq de la matriz
     private int filas, columnas;
-    private int fichasBlancas=12;
-    private int fichasNegras=12;
+    public int fichasBlancas=12; //contador de fichas blancas
+    public int fichasNegras=12;  //contadro de fichas negras
 
     public MatrizOrtogonal_v2() {
         inicio = null;
@@ -374,6 +374,20 @@ public class MatrizOrtogonal_v2 {
                 mover.status=true;
             }
             else{
+                if(mover.color=="R"){ 
+                    fichasBlancas--;
+                }
+                if(mover.color=="N"){
+                     fichasNegras--;
+                }
+
+                mover.color=actual.color;
+                actual.color="S";
+                actual.tipo="T";
+                actual.status=false;
+                mover.tipo="D";
+                mover.status=true;
+
                 //falta descontar fichas
             }
         }
@@ -385,7 +399,6 @@ public class MatrizOrtogonal_v2 {
         // MatrizOrtogonal matriz=new MatrizOrtogonal();
         MatrizOrtogonal_v2 tablero = new MatrizOrtogonal_v2();
 
-
         tablero.crearMatriz(8, 8);
 
         tablero.inicializarFichas();
@@ -396,6 +409,15 @@ public class MatrizOrtogonal_v2 {
         tablero.mostrarTableroDamas(0, 0);
         tablero.moverFicha(2, 6, 3, 5);
         tablero.mostrarTableroDamas(0, 0);
+        tablero.moverFicha(2, 4, 3, 5);
+        tablero.mostrarTableroDamas(0, 0);
+        System.out.println(tablero.fichasNegras);
+        System.out.println(tablero.fichasBlancas);
+        tablero.moverFicha(4, 6, 3, 5);
+        tablero.mostrarTableroDamas(0, 0);
+        System.out.println(tablero.fichasNegras);
+        System.out.println(tablero.fichasBlancas);
+
 
         //tablero.jugar();
     }
