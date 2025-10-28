@@ -352,13 +352,28 @@ public class MatrizOrtogonal_v2 {
         Nodo mover = inicio;
         
         //nos movemos a la ficha original
-        for(int i=1; i<fo; i++) actual = actual.abajo;
-        for(int j=1; j<co; j++) actual = actual.derecha;
+        for(int i=1; i<fo; i++) actual = actual.abajo; //fila original
+        for(int j=1; j<co; j++) actual = actual.derecha; //columna original
 
         //nos movemos a la casilla destino
-        for(int i=1; i<fd; i++) mover = mover.abajo;
-        for(int j=1; j<cd; j++) mover = mover.derecha;
+        for(int i=1; i<fd; i++) mover = mover.abajo; //fila destino
+        for(int j=1; j<cd; j++) mover = mover.derecha; //columna destino
         
+        if(mover.colorTablero!="N"){ //valida que solo se nueve en el tablero negro
+            System.out.println("solo tablero negro");
+            return;
+        }
+        if(actual.color=="R")
+            if(fd!=fo-1){
+                System.out.println("moviento no valido");
+            return;
+            }
+        if(actual.color=="N")
+            if(fd!=fo+1){
+                System.out.println("moviento no valido");
+            return;
+            }
+
         //si la dama es del mismo color no pasa nada
         if (actual.color==mover.color){
             System.out.println("damas del mismo color");
@@ -391,8 +406,6 @@ public class MatrizOrtogonal_v2 {
                 //falta descontar fichas
             }
         }
-
-
     }
 
     public static void main(String[] args) {
@@ -417,8 +430,25 @@ public class MatrizOrtogonal_v2 {
         tablero.mostrarTableroDamas(0, 0);
         System.out.println(tablero.fichasNegras);
         System.out.println(tablero.fichasBlancas);
-
-
+        tablero.moverFicha(3, 5, 2, 4);
+        tablero.mostrarTableroDamas(0, 0);
+        tablero.moverFicha(2, 4, 4, 4);
+        tablero.moverFicha(2, 4, 4, 5);
+        tablero.moverFicha(3, 3, 2, 4);
+        tablero.mostrarTableroDamas(0, 0);
+        tablero.moverFicha(2, 4, 3, 3);
+        tablero.moverFicha(2, 4, 1, 5);
+        tablero.mostrarTableroDamas(0, 0);
+        tablero.moverFicha(1, 7, 2, 6);
+        tablero.mostrarTableroDamas(0, 0);
+        tablero.moverFicha(1, 5, 2, 6);
+        tablero.mostrarTableroDamas(0, 0);
+        tablero.moverFicha(2, 6, 1, 7);
+        tablero.mostrarTableroDamas(0, 0);
+        tablero.moverFicha(1, 7, 2, 8);
+        tablero.mostrarTableroDamas(0, 0);
+        tablero.moverFicha(2, 8, 4, 6);
+        tablero.mostrarTableroDamas(0, 0);
         //tablero.jugar();
     }
 }
