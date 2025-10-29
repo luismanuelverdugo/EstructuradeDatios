@@ -263,7 +263,14 @@ public class MatrizOrtogonal_v2 {
                     } else
                         System.out.print("🔴");
                 }
-                if (colActual.tipo != "D" && colActual.colorTablero == "N") {
+                if (colActual.tipo == "R") {
+                    if (colActual.color != "R") {
+                        System.out.print("🖤");
+                    } else
+                        System.out.print("♥️");
+                }
+                
+                if (colActual.tipo != "D" && colActual.colorTablero == "N" && colActual.tipo!="R") {
                     System.out.print("⬛");
                 } else if (colActual.tipo != "D" && colActual.colorTablero == "B") {
                     System.out.print("⬜");
@@ -363,6 +370,33 @@ public class MatrizOrtogonal_v2 {
             System.out.println("solo tablero negro");
             return;
         }
+
+        //mueve khalessi
+        if(actual.tipo=="R"){
+            if(actual.color==mover.color){
+                System.out.println("reina y dama del mismo color.");
+                return;
+            }
+            else{
+                if(mover.color=="R"){ 
+                    fichasBlancas--;
+                }
+                if(mover.color=="N"){
+                     fichasNegras--;
+                }
+
+                mover.color=actual.color;
+                actual.color="S";
+                actual.tipo="T";
+                actual.status=false;
+                mover.tipo="R";
+                mover.status=true;
+                
+                System.out.println("Dracarhis... 🔥");
+            }
+            return;
+        }
+
         if(actual.color=="R")
             if(fd!=fo-1){
                 System.out.println("moviento no valido");
@@ -403,6 +437,12 @@ public class MatrizOrtogonal_v2 {
                 mover.tipo="D";
                 mover.status=true;
 
+                if(mover.abajo==null || mover.arriba==null  ){
+                    //hola mi reina, princena porque mama no a muerto....
+                    mover.tipo="R";
+                    System.out.println("mi reina khaleesi, madre de dragones");    
+                }
+                
                 //falta descontar fichas
             }
         }
@@ -447,8 +487,14 @@ public class MatrizOrtogonal_v2 {
         tablero.mostrarTableroDamas(0, 0);
         tablero.moverFicha(1, 7, 2, 8);
         tablero.mostrarTableroDamas(0, 0);
-        tablero.moverFicha(2, 8, 4, 6);
+        tablero.moverFicha(2, 8, 3, 7);
         tablero.mostrarTableroDamas(0, 0);
+        tablero.moverFicha(3, 7, 6, 4);
+        tablero.mostrarTableroDamas(0, 0);
+
+
+        //tablero.moverFicha(2, 8, 4, 6);
+        //tablero.mostrarTableroDamas(0, 0);
         //tablero.jugar();
     }
 }
