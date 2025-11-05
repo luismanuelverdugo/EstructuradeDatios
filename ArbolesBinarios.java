@@ -70,6 +70,53 @@ public class ArbolesBinarios {
             //si el valor ya existe, no hace nada
             return actual;
         }
+
+        /*
+         * busca si un valor existe dentro del arbol
+         * param valor: valor entero a buscar
+         * return: true si el valor existe en el arbol y false si no
+         */
+        public boolean buscar(int valor){
+            return buscarRecursivo(raiz, valor);
+        }
+
+        /*
+         * busca un valor recorriendo el arbol de forma recursiva
+         * logica:
+         * si el nodo actual es null -> arbol este vacio
+         * si el valor es igual al actual.valor -> true
+         * ojito aqui ;)
+         * SI ES MENOR -> busca en el subarbol izquierda
+         * SI ES MAYOR -> busca en el subarbol derecha
+         * 
+         * param actual: Nodo actual del recorrido
+         * param valor: valor a buscar
+         * return: true-> si se encuentra el valor, false-> si no lo encuentra
+         */
+        private boolean buscarRecursivo(Nodo actual, int valor){
+            if(actual==null)
+                return false;
+            if(actual.valor==valor)
+                return true;
+            return valor<actual.valor
+                ? buscarRecursivo(actual.izquierda, valor)
+                : buscarRecursivo(actual.derecha, valor);
+        }
+
+        /*
+         * recorre el arbol en "orden: In-Orden" izquierda -> raiz -> derecha
+         * este recorrido muestra los valores del arbol en orden ascendente
+         * ejemplo:
+         * si el arbol contiene: 50,30,70,20,40,60,80
+         * el recorrido InOrden mostra: 20,30,40,50,60,70,80
+         */
+        public void recorridoInOrden(Nodo nodo){
+            if(nodo!=null){
+                recorridoInOrden(nodo.izquierda);
+                System.out.println(nodo.valor+" ");
+                recorridoInOrden(nodo.derecha);
+            }
+        }
     }
 
     public static void main(String[] args){
@@ -82,5 +129,13 @@ public class ArbolesBinarios {
         arbol.insertar(40);
         arbol.insertar(60);
         arbol.insertar(80);
+
+        //busqueda del valor en el arbol
+        System.out.println("----- busqueda -----");
+        System.out.println("chocobollo valor 40:"+arbol.buscar(40));
+        System.out.println("chocobollo not found 90:"+arbol.buscar(90));
+
+        System.out.println("recorrido en In-Orden");
+        arbol.recorridoInOrden(arbol.raiz);
     }
 }
