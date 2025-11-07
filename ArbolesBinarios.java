@@ -117,6 +117,35 @@ public class ArbolesBinarios {
                 recorridoInOrden(nodo.derecha);
             }
         }
+
+        /*
+         * recorre el arbol en "Orden: Pre-Orden" raiz -> izquierda -> derecha
+         * ejemplo:
+         * si el arbol contiene: 50,30,70,20,40,60,80
+         * resultado: 50,30,20,40,70,60,80
+         * 
+         */
+        public void recorridoPreOrden(Nodo nodo){
+            if(nodo!=null){
+                System.out.println(nodo.valor+" ");
+                recorridoPreOrden(nodo.izquierda);
+                recorridoPreOrden(nodo.derecha);
+            }
+        }
+
+        /*
+         * recorre el arbol en "Orden Post-Orden" Izquierda -> Derecha -> Raiz
+         * ejemplo:
+         * si el arbol contiene: 50,30,70,20,40,60,80
+         * resultado: 20, 40, 30, 60, 80, 70, 50
+         */
+        public void recorridoPostOrden(Nodo nodo){
+            if(nodo!=null){
+                recorridoPostOrden(nodo.izquierda);
+                recorridoPostOrden(nodo.derecha);
+                System.out.println(nodo.valor+" ");
+            }
+        }
     }
 
     public static void main(String[] args){
@@ -135,7 +164,13 @@ public class ArbolesBinarios {
         System.out.println("chocobollo valor 40:"+arbol.buscar(40));
         System.out.println("chocobollo not found 90:"+arbol.buscar(90));
 
-        System.out.println("recorrido en In-Orden");
+        System.out.println("=== recorrido en In-Orden ===");
         arbol.recorridoInOrden(arbol.raiz);
+
+        System.out.println("=== recorrido en Pre-Orden ===");
+        arbol.recorridoPreOrden(arbol.raiz);
+
+        System.out.println("=== recorrido en Post-Orden ===");
+        arbol.recorridoPostOrden(arbol.raiz);
     }
 }
