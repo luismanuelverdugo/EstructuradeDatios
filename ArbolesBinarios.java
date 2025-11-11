@@ -118,6 +118,14 @@ public class ArbolesBinarios {
             }
         }
 
+        public void imprimirArbolInOrder(Nodo nodo, int nivel){
+            if(nodo!=null){
+                imprimirArbolInOrder(nodo.derecha, nivel+1);
+                System.out.println("   ".repeat(nivel)+nodo.valor);
+                imprimirArbolInOrder(nodo.izquierda, nivel+1);
+            }
+
+        }
         /*
          * recorre el arbol en "Orden: Pre-Orden" raiz -> izquierda -> derecha
          * ejemplo:
@@ -146,6 +154,66 @@ public class ArbolesBinarios {
                 System.out.println(nodo.valor+" ");
             }
         }
+
+        /* 
+         * Elimina in nodo con un valor especifico dentro de un arbol
+         * -nodo: referencia al nodo actual (puede ser la raiz o un subarbol)
+         * -valor: valor del nodo a eliminar
+        */
+        public Nodo eliminar(Nodo nodo, int valor){
+            //si el arbol esta vacio, no se hace nada
+            if(nodo==null)
+                return null;
+
+            //busca el nodo a eliminar
+            if(valor<nodo.valor)
+                nodo.izquierda=eliminar(nodo.izquierda, valor); //busca en subarbol izquierdo
+            else if(valor>nodo.valor)
+                nodo.derecha=eliminar(nodo.derecha, valor); //busca en subarbol derecho
+            else{
+                //nodo encontrado
+                //caso 1: nodo sin hijos
+                //se elimina simplemente 
+                if(nodo.izquierda==null && nodo.derecha==null)
+                    return null;
+
+                //caso 2: nodo con un solo hijo
+                else if(nodo.izquierda==null)
+                    return nodo.derecha; //solo tiene hijo derecho
+                else if(nodo.derecha==null)
+                    return nodo.izquierda; //solo tiene hijo izquierdo
+                
+                //caso 3: nodo con dos hijos papá luchon
+                //se debe encontrar un valor que lo reemplace (sucersor inorden)
+                //el sucesor inorden es el nodo mas pequeño del subarbol derecho
+                nodo.valor=valorMinimo(nodo.derecha);
+
+                //luego se elimina
+                nodo.derecha=eliminar(nodo.derecha, nodo.valor);
+            }
+            //regresa la raiz actulizada del subarbol
+            return nodo;
+        }
+
+        /*
+        * busca y devuelve el valor minimo dentro de un subarbol
+        * en un arbol de busqueda, el valor minimo se
+        * encuentra recorriendo siempre hacia la izquierda
+        * -nodo: nodo raiz del arbol subarbol donde se buscara el minimo
+        * -return: el valor mas pequeño encontrado en ese subarbol
+        */
+        private int valorMinimo(Nodo nodo){
+            int min=nodo.valor;
+
+            //mientras existan nodos a la izquierda, sigue bajando
+            while(nodo.izquierda!=null){
+                min=nodo.izquierda.valor;
+                nodo=nodo.izquierda;
+            }
+                //ultimo nodo a la izquierda es el valor minimo
+            return min;
+        }
+        
     }
 
     public static void main(String[] args){
@@ -172,5 +240,15 @@ public class ArbolesBinarios {
 
         System.out.println("=== recorrido en Post-Orden ===");
         arbol.recorridoPostOrden(arbol.raiz);
+
+        System.out.println("-------- elimina valor del arbol 70 -------");
+        arbol.imprimirArbolInOrder(arbol.raiz, 0);
+
+        arbol.eliminar(arbol.raiz, 70);
+
+        System.out.println("=== recorrido en In-Orden ===");
+        //arbol.recorridoInOrden(arbol.raiz);
+        arbol.imprimirArbolInOrder(arbol.raiz, 0);
+
     }
 }
