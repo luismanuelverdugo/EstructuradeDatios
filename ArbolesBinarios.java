@@ -5,6 +5,13 @@
  * un hijo izquiero (valores menores) 
  * un hijo derecho (valores mayores)
  */
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.*;
+import java.util.Random;
+
 public class ArbolesBinarios {
     /*
      * la clase Nodo representa la unidad basica del arbol binario
@@ -33,6 +40,7 @@ public class ArbolesBinarios {
      */
     static class ArbolBinario {
         Nodo raiz; //nodo raiz : punto de entrada del arbol
+        int saltos;
         
         /*
          * inserta un nuevo valor en el arbol
@@ -94,6 +102,7 @@ public class ArbolesBinarios {
          * return: true-> si se encuentra el valor, false-> si no lo encuentra
          */
         private boolean buscarRecursivo(Nodo actual, int valor){
+            saltos++;
             if(actual==null)
                 return false;
             if(actual.valor==valor)
@@ -213,12 +222,27 @@ public class ArbolesBinarios {
                 //ultimo nodo a la izquierda es el valor minimo
             return min;
         }
+
+        // Método para leer los números del archivo y mostrarlos
+        public static void leerNumeros(String nombreArchivo, ArbolBinario arboll) {
+            try(BufferedReader br= new BufferedReader(new FileReader(nombreArchivo))){
+                String linea;
+                System.out.println("numeros leidos del archivo:");
+                while ((linea=br.readLine())!=null) {
+                    arboll.insertar(Integer.parseInt(linea));
+                }
+            }catch(IOException e){
+                System.out.println("error en el archivo:"+e.getMessage());
+            }
+        }
+
         
     }
 
     public static void main(String[] args){
         ArbolBinario arbol = new ArbolBinario();
         //inserta nodos en el arbol
+        /* 
         arbol.insertar(50);
         arbol.insertar(30);
         arbol.insertar(70);
@@ -226,8 +250,25 @@ public class ArbolesBinarios {
         arbol.insertar(40);
         arbol.insertar(60);
         arbol.insertar(80);
+        */
+        arbol.leerNumeros("numeros.txt", arbol);
+        arbol.saltos=0;
+        System.out.println("chocobollo valor -1:"+arbol.buscar(-1));
+        System.out.println("numero de saltos:"+arbol.saltos);
+        arbol.saltos=0;
+        System.out.println("chocobollo valor 40:"+arbol.buscar(40));
+        System.out.println("numero de saltos:"+arbol.saltos);
+        arbol.saltos=0;
+        System.out.println("chocobollo valor 1:"+arbol.buscar(1));
+        System.out.println("numero de saltos:"+arbol.saltos);
+        arbol.saltos=0;
+        System.out.println("chocobollo valor 840:"+arbol.buscar(840));
+        System.out.println("numero de saltos:"+arbol.saltos);
 
+        //arbol.recorridoInOrden(arbol.raiz);
+        arbol.imprimirArbolInOrder(arbol.raiz, 0);
         //busqueda del valor en el arbol
+        /*
         System.out.println("----- busqueda -----");
         System.out.println("chocobollo valor 40:"+arbol.buscar(40));
         System.out.println("chocobollo not found 90:"+arbol.buscar(90));
@@ -249,6 +290,6 @@ public class ArbolesBinarios {
         System.out.println("=== recorrido en In-Orden ===");
         //arbol.recorridoInOrden(arbol.raiz);
         arbol.imprimirArbolInOrder(arbol.raiz, 0);
-
+        */
     }
 }
