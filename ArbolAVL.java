@@ -1,5 +1,8 @@
 
 // Archivo: ArbolAVL.java
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 public class ArbolAVL {
@@ -98,6 +101,7 @@ public class ArbolAVL {
         if (nodo == null)
             return new NodoAVL(valor);
 
+        //si el valor es menor se va por la izquierda, en caso contrario por la derecha
         if (valor < nodo.valor)
             nodo.izquierda = insertar(nodo.izquierda, valor);
         else if (valor > nodo.valor)
@@ -284,6 +288,19 @@ public class ArbolAVL {
         return 1 + Math.max(altura(nodo.izquierda), altura(nodo.derecha));
     }
 
+    // Método para leer los números del archivo y mostrarlos
+    public static void leerNumeros(String nombreArchivo, ArbolAVL arbol) {
+        try(BufferedReader br= new BufferedReader(new FileReader(nombreArchivo))){
+            String linea;
+            System.out.println("numeros leidos del archivo:");
+            while ((linea=br.readLine())!=null) {
+                arbol.insertar(Integer.parseInt(linea));
+            }
+        }catch(IOException e){
+                System.out.println("error en el archivo:"+e.getMessage());
+        }
+    }    
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void main(String[] args) {
@@ -292,12 +309,52 @@ public class ArbolAVL {
         ArbolAVL arbol = new ArbolAVL();
 
         // Insertar valores (algunos provocan rotaciones)
-        arbol.insertar(10);
+        /* 
+        arbol.insertar(0); //10 //2
         arbol.insertar(20);
+        arbol.mostrarEstructura();
+        arbol.imprimirArbolExacto();
+
         arbol.insertar(5);
-        arbol.insertar(4); // Provoca una rotación
-        arbol.insertar(15); // Provoca otra rotación
+        arbol.mostrarEstructura();
+        arbol.imprimirArbolExacto();
+
+        arbol.insertar(4); 
+        arbol.mostrarEstructura();
+        arbol.imprimirArbolExacto();
+
+        arbol.insertar(15); 
+        arbol.mostrarEstructura();
+        arbol.imprimirArbolExacto();
+ 
         arbol.insertar(3);
+        arbol.mostrarEstructura();
+        arbol.imprimirArbolExacto();
+
+        arbol.insertar(1);
+        arbol.mostrarEstructura();
+        arbol.imprimirArbolExacto();
+
+        arbol.insertar(6);
+        arbol.mostrarEstructura();
+        arbol.imprimirArbolExacto();
+
+        arbol.insertar(11);
+        arbol.mostrarEstructura();
+        arbol.imprimirArbolExacto();
+
+        arbol.insertar(2);
+        arbol.mostrarEstructura();
+        arbol.imprimirArbolExacto();  
+        
+        arbol.insertar(-1);
+        arbol.mostrarEstructura();
+        arbol.imprimirArbolExacto(); 
+
+        arbol.insertar(-2);
+        arbol.mostrarEstructura();
+        arbol.imprimirArbolExacto(); 
+        
         arbol.insertar(18);
         arbol.insertar(12);
         arbol.insertar(49);
@@ -307,9 +364,12 @@ public class ArbolAVL {
         arbol.insertar(67);
         arbol.insertar(23);
         arbol.insertar(32);
-
+        */
         // Mostrar recorrido inorder
         // System.out.println("Recorrido Inorder del Árbol AVL:");
+        
+        arbol.leerNumeros("numeros.txt", arbol);
+        
         arbol.mostrarInorder();
 
         arbol.mostrarEstructura();
